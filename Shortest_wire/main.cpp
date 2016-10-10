@@ -67,7 +67,7 @@ bool FindShortestPath(Matrix board, Position startPoint, Position endPoint)
 {
     queue<Position> nodeQueue;
     Position curPos(startPoint);
-    Position neighbor[] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    Position neighbor[] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
     while (true)
     {
         for (int i = 0; i < 4; ++i)
@@ -75,13 +75,19 @@ bool FindShortestPath(Matrix board, Position startPoint, Position endPoint)
             Position pos;
             pos.row = curPos.row + neighbor[i].row;
             pos.col = curPos.col + neighbor[i].col;
-            if (board.m[pos.row][pos.col] == 0)
+            if (pos.row >= 0 && pos.col >= 0 && pos.row < board.height && pos.col < board.width)
             {
-                board.m[pos.row][pos.col] = board.m[curPos.row][curPos.col] + 1;
-                nodeQueue.push(pos);
+                if (board.m[pos.row][pos.col] == 0)
+                {
+                    board.m[pos.row][pos.col] = board.m[curPos.row][curPos.col] + 1;
+                    nodeQueue.push(pos);
+                }
+                if (board.m[pos.row][pos.col] == E)
+                {
+                    board.m[startPoint.row][startPoint.col] = 0;
+                    return true;
+                }
             }
-            if (board.m[pos.row][pos.col] == E)
-                return true;
         }
         if (nodeQueue.empty())
         {

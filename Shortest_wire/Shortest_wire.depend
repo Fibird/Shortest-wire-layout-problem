@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1476108016 source:e:\codeblocks\shortest-wire-layout-problem\shortest_wire\main.cpp
+	<iostream>
+	<queue>
+	<fstream>
+
