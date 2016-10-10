@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <fstream>
 
 using namespace std;
 
@@ -21,8 +22,10 @@ int main()
 {
     int m_width, m_height;
     Matrix circuitBoard;
-    cout << "Please Enter the width and height of the circuit board: ";
-    cin >> m_width >> m_height;
+    ifstream fin;
+    fin.open("circuit.txt");    // Read the circuit layout from a file
+
+    fin >> m_height >> m_width;
     circuitBoard.width = m_width;
     circuitBoard.height = m_height;
     // Allocate memory for circuit board
@@ -31,18 +34,16 @@ int main()
     {
         circuitBoard.m[i] = new int[m_width];
     }
-    // Initialize the circuit board
-    for (int i = 0; i < m_width; ++i)
+    // Initialize the circuit board from a file
+    for (int i = 0; i < m_height; ++i)
     {
-        if (i == (m_width / 2) && j == 0)
+        for (int j = 0; j < m_width; ++j)
         {
-            circuitBoard.m[i][j] = -1;
-        }
-        if (i == 3 && j < 4)
-        {
-            circuitBoard.m[i][j] = -1;
+            fin >> circuitBoard.m[i][j];
         }
     }
+
+    fin.close();
     return 0;
 }
 
