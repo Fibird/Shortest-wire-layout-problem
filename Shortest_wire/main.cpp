@@ -27,11 +27,22 @@ int main()
     circuitBoard.height = m_height;
     // Allocate memory for circuit board
     circuitBoard.m = new int*[m_height];
-    for (int i = 0; i < 0; ++i)
+    for (int i = 0; i < m_height; ++i)
     {
         circuitBoard.m[i] = new int[m_width];
     }
-
+    // Initialize the circuit board
+    for (int i = 0; i < m_width; ++i)
+    {
+        if (i == (m_width / 2) && j == 0)
+        {
+            circuitBoard.m[i][j] = -1;
+        }
+        if (i == 3 && j < 4)
+        {
+            circuitBoard.m[i][j] = -1;
+        }
+    }
     return 0;
 }
 
