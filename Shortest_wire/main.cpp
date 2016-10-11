@@ -17,9 +17,12 @@ struct Position
 };
 
 #define E -3 // End point
+#define W -1 // Wall
+#define P -4 // Path
 
 bool FindShortestPath(Matrix board, Position startPoint, Position endPoint);
 void Output(Matrix board);
+void MarkPath(Matrix board, Position endPoint);
 
 int main()
 {
@@ -52,7 +55,8 @@ int main()
     }
     if (FindShortestPath(circuitBoard, s, e))
     {
-        cout << "------One of Solution------\n";
+        cout << "------Solution------\n";
+        MarkPath(circuitBoard, e);
         Output(circuitBoard);
     }
     else
@@ -85,6 +89,7 @@ bool FindShortestPath(Matrix board, Position startPoint, Position endPoint)
                 if (board.m[pos.row][pos.col] == E)
                 {
                     board.m[startPoint.row][startPoint.col] = 0;
+                    board.m[endPoint.row][endPoint.col] = board.m[curPos.row][curPos.col] + 1;
                     return true;
                 }
             }
@@ -107,8 +112,43 @@ void Output(Matrix board)
     {
         for (int j = 0; j < board.width; ++j)
         {
-            cout << board.m[i][j] << "\t";
+            if (board.m[i][j] == P)
+                cout << '-' << "\t";
+            else if (board.m[i][j] == W)
+                cout << '#' << "\t";
+            else
+                cout << "*" << "\t";
         }
         cout << endl;
+    }
+}
+
+void MarkPath(Matrix board, Position endPoint)
+{
+    Position curPos(endPoint);
+    int curValue = board.m[endPoint.row][endPoint.col];
+
+    while (curValue != 0)
+    {
+        if (board.m[curPos.row - 1][curPos.col] == (curValue - 1))
+        {
+            curValue--;
+            board.m[--curPos.row][curPos.col] = P;
+        }
+        else if (board.m[curPos.row][curPos.col + 1] == (curValue - 1))
+        {
+            curValue--;
+            board.m[curPos.row][++curPos.col] = P;
+        }
+        else if (board.m[curPos.row + 1][curPos.col] == (curValue - 1))
+        {
+            curValue--;
+            board.m[++curPos.row][curPos.col] = P;
+        }
+        else if (board.m[curPos.row][curPos.col - 1] == (curValue - 1))
+        {
+            curValue--;
+            board.m[curPos.row][--curPos.col] = P;
+        }
     }
 }
