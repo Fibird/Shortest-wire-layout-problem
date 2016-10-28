@@ -6,7 +6,6 @@
 
 # 说明
 
-# Shortest-wire-layout-problem
 本程序是通过读取文件circuit.txt来获取电路板布局的，格式及说明如下：
 
 ```
